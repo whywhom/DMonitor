@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{273DC79A-E791-4EF2-9C1C-031C66CE08E1}</ProjectGuid>
+    <RootNamespace>DMonitor</RootNamespace>
+    <Keyword>MFCProj</Keyword>
+    <ProjectName>DMonitor</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Static</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Static</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0804</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0804</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="json\src\json_internalarray.inl" />
+    <None Include="json\src\json_internalmap.inl" />
+    <None Include="json\src\json_valueiterator.inl" />
+    <None Include="json\src\sconscript" />
+    <None Include="ReadMe.txt" />
+    <None Include="res\DMonitor.ico" />
+    <None Include="res\DMonitor.rc2" />
+    <None Include="res\Toolbar.bmp" />
+    <None Include="res\toolbar1.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ColorButton.h" />
+    <ClInclude Include="ColorStatic.h" />
+    <ClInclude Include="CommLayer.h" />
+    <ClInclude Include="DataTemp.h" />
+    <ClInclude Include="DirTreeCtrl.h" />
+    <ClInclude Include="DMonitor.h" />
+    <ClInclude Include="DMonitorDlg.h" />
+    <ClInclude Include="DMonitorView.h" />
+    <ClInclude Include="JobCopyDlg.h" />
+    <ClInclude Include="JobDlg.h" />
+    <ClInclude Include="JobEditDlg.h" />
+    <ClInclude Include="JobEditDlgControl.h" />
+    <ClInclude Include="JobEditDlgCurve.h" />
+    <ClInclude Include="JobEditDlgOrigin.h" />
+    <ClInclude Include="JobEditDlgPower.h" />
+    <ClInclude Include="JobEditDlgTool.h" />
+    <ClInclude Include="JobInfoDlg.h" />
+    <ClInclude Include="json\include\autolink.h" />
+    <ClInclude Include="json\include\config.h" />
+    <ClInclude Include="json\include\features.h" />
+    <ClInclude Include="json\include\forwards.h" />
+    <ClInclude Include="json\include\json.h" />
+    <ClInclude Include="json\include\reader.h" />
+    <ClInclude Include="json\include\value.h" />
+    <ClInclude Include="json\include\writer.h" />
+    <ClInclude Include="json\src\json_batchallocator.h" />
+    <ClInclude Include="PetroData.h" />
+    <ClInclude Include="PublicInterface.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="SerialPort.h" />
+    <ClInclude Include="SortStringArray.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="TestDlg.h" />
+    <ClInclude Include="tinystr.h" />
+    <ClInclude Include="tinyxml.h" />
+    <ClInclude Include="WorkInfo.h" />
+    <ClInclude Include="WorkUnit.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ColorButton.cpp" />
+    <ClCompile Include="ColorStatic.cpp" />
+    <ClCompile Include="CommLayer.cpp" />
+    <ClCompile Include="DataTemp.cpp" />
+    <ClCompile Include="DirTreeCtrl.cpp" />
+    <ClCompile Include="DMonitor.cpp" />
+    <ClCompile Include="DMonitorDlg.cpp" />
+    <ClCompile Include="DMonitorView.cpp" />
+    <ClCompile Include="JobCopyDlg.cpp" />
+    <ClCompile Include="JobDlg.cpp" />
+    <ClCompile Include="JobEditDlg.cpp" />
+    <ClCompile Include="JobEditDlgControl.cpp" />
+    <ClCompile Include="JobEditDlgCurve.cpp" />
+    <ClCompile Include="JobEditDlgOrigin.cpp" />
+    <ClCompile Include="JobEditDlgPower.cpp" />
+    <ClCompile Include="JobEditDlgTool.cpp" />
+    <ClCompile Include="JobInfoDlg.cpp" />
+    <ClCompile Include="json\src\json_reader.cpp" />
+    <ClCompile Include="json\src\json_value.cpp" />
+    <ClCompile Include="json\src\json_writer.cpp" />
+    <ClCompile Include="PetroData.cpp" />
+    <ClCompile Include="SerialPort.cpp" />
+    <ClCompile Include="SortStringArray.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="TestDlg.cpp" />
+    <ClCompile Include="tinystr.cpp" />
+    <ClCompile Include="tinyxml.cpp" />
+    <ClCompile Include="tinyxmlerror.cpp" />
+    <ClCompile Include="tinyxmlparser.cpp" />
+    <ClCompile Include="WorkInfo.cpp" />
+    <ClCompile Include="WorkUnit.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DMonitor.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="DMonitor.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
