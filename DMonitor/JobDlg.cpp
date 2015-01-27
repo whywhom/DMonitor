@@ -50,6 +50,9 @@ BEGIN_MESSAGE_MAP(CJobDlg, CDialog)
 	ON_COMMAND(ID_TOOL_DEL, &CJobDlg::OnToolDel)
 	ON_BN_CLICKED(IDC_ZCW_ADDITEM, &CJobDlg::OnBnClickedZcwAdditem)
 	ON_BN_CLICKED(IDC_ZCW_DELITEM, &CJobDlg::OnBnClickedZcwDelitem)
+	ON_NOTIFY(NM_DBLCLK, IDC_ZCW_JOB_TREE, &CJobDlg::OnNMDblclkZcwJobTree)
+	ON_NOTIFY(NM_DBLCLK, IDC_ZCW_JOBTREE_LEFT, &CJobDlg::OnNMDblclkZcwJobtreeLeft)
+	ON_NOTIFY(NM_RCLICK, IDC_ZCW_JOB_TREE, &CJobDlg::OnNMRClickZcwJobTree)
 END_MESSAGE_MAP()
 
 
@@ -872,5 +875,48 @@ void CJobDlg::OnBnClickedZcwDelitem()
 			MessageBox(e->m_pErrorInfo->m_strDescription);
 			e->Delete();
 		}	
+	}
+}
+
+
+void CJobDlg::OnNMDblclkZcwJobTree(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	// TODO: 在此添加控件通知处理程序代码
+	*pResult = 0;
+	OnToolOpen();
+}
+
+
+void CJobDlg::OnNMDblclkZcwJobtreeLeft(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	// TODO: 在此添加控件通知处理程序代码
+	*pResult = 0;
+}
+
+
+void CJobDlg::OnNMRClickZcwJobTree(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	// TODO: 在此添加控件通知处理程序代码
+	//*pResult = 0;
+	CPoint  cp; 
+	GetCursorPos(&cp); 
+	m_treeCtrl.ScreenToClient(&cp);  //m_TREE是CTreeCtrl控件变量。
+	HTREEITEM  titem = m_treeCtrl.HitTest(cp,NULL); //获取当前鼠标右键单击的位置下的item
+	//m_treeCtrl.SetItemState(titem, INDEXTOSTATEIMAGEMASK(2), LVIS_STATEIMAGEMASK); // 选中
+	CString str = m_treeCtrl.GetItemText(titem);
+	HTREEITEM sel_htem=m_treeCtrl.GetSelectedItem(); 
+	if(sel_htem != titem)
+	{
+		return;
+	}
+	CString strPath=m_treeCtrl.GetFullPath(sel_htem);//获取文件路径名称
+	if(!m_treeCtrl.FindSubDir(strPath))
+	{
+		CPoint point;
+        GetCursorPos(&point);
+		CMenu menu;
+		menu.LoadMenu(IDR_TOOL);
+		menu.GetSubMenu(0)->TrackPopupMenu(TPM_LEFTALIGN | 
+		TPM_RIGHTBUTTON, point.x, point.y, this, NULL);
 	}
 }

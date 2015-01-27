@@ -51,4 +51,7 @@ public:
 	void DisplayItem(HTREEITEM hParent,LPCTSTR strName);
 	afx_msg void OnBnClickedZcwAdditem();
 	afx_msg void OnBnClickedZcwDelitem();
+	afx_msg void OnNMDblclkZcwJobTree(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnNMDblclkZcwJobtreeLeft(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnNMRClickZcwJobTree(NMHDR *pNMHDR, LRESULT *pResult);
 };
