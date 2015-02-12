@@ -1,7 +1,7 @@
 #pragma once
 #include "afxwin.h"
 #include "ColorStatic.h"
-
+#include "LimitEdit.h"
 // CJobEditDlgCurve ¶Ô»°¿ò
 
 class CJobEditDlgCurve : public CDialog
@@ -32,8 +32,8 @@ public:
 	CComboBox m_linetype;
 	CColorStatic m_scolor;
 	CButton m_btColor;
-	CEdit nTestEditMin;
-	CEdit nTestEditMax;
+	CLimitEdit nTestEditMin;
+	CLimitEdit nTestEditMax;
 	CEdit m_edittitle;
 	afx_msg void OnBnClickedButtonColor();
 	CString m_title;

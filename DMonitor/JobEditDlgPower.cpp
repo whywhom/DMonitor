@@ -116,6 +116,29 @@ BOOL CJobEditDlgPower::OnInitDialog()
 	CDialog::OnInitDialog();
 
 	// TODO:  在此添加额外的初始化
+	((CEdit*)GetDlgItem(IDC_ZCW_POWER_EDIT1))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_POWER_EDIT2))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_POWER_EDIT3))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_POWER_EDIT4))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_POWER_EDIT5))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_POWER_EDIT6))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_POWER_EDIT7))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_POWER_EDIT8))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_POWER_EDIT9))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_POWER_EDIT10))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_POWER_EDIT11))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_POWER_EDIT12))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_POWER_EDIT13))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_POWER_EDIT14))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_POWER_EDIT15))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_POWER_EDIT16))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_POWER_EDIT17))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_POWER_EDIT18))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_POWER_EDIT19))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_POWER_EDIT20))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_POWER_EDIT21))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_POWER_EDIT22))->SetLimitText(10);
+
 	CString m_combo1ary[]={_T("不加电"),_T("交流1"),_T("交流2"),_T("直流1[正]"),_T("直流1[负]"),_T("直流3[正]"),_T("直流3[负]")};
 	CString m_combo2ary[]={_T("不加电"),_T("直流1[正]"),_T("直流1[负]"),_T("直流3[正]"),_T("直流3[负]")};
 	CString m_combo3ary[]={_T("不加电"),_T("交流2"),_T("直流2[正]"),_T("直流2[负]"),_T("直流3[正]"),_T("直流3[负]")};

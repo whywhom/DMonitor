@@ -29,7 +29,6 @@ public:
 	void GetModulePath();
 	int CreateDmFile(CString strFile);
 	int CreateIniFile(CString strFile);
-
 	void LinkElementeFuns(TiXmlElement * element, CString str);
 
 	CCommLayer commLayer;//串口通信管理
@@ -61,7 +60,7 @@ public:
 
 	CTypedPtrList < CPtrList, CWorkInfo * >workInfoList;
 	CTypedPtrList < CPtrList, CWorkUnit * >workUnitList;
-
+	CString LoadJobName;//保存加载作业节点
 	//当前作业信息
 	//仪器信息定义开始
 	typedef struct{

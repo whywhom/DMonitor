@@ -33,4 +33,5 @@ public:
 	afx_msg void OnEnChangeOuterdiam();
 	CString m_Speed;
 	afx_msg void OnEnChangeSpeed();
+	virtual BOOL OnInitDialog();
 };

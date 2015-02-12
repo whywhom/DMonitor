@@ -175,6 +175,7 @@ public:
 	void ClearDataTempa();
 	void SetScaleScroll();
 	int ParseJsonFromFile(CString filename);
+	CWorkInfo* FindSameTitleInWorkInfo(CString strUnit);
 // й╣ож
 protected:
 	HICON m_hIcon;

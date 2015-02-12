@@ -5,7 +5,6 @@
 #include "stdafx.h"
 #include "DMonitor.h"
 #include "DMonitorDlg.h"
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif

@@ -137,3 +137,21 @@ void CJobEditDlgTool::OnEnChangeSpeed()
 	// TODO:  在此添加控件通知处理程序代码
 	UpdateData();
 }
+
+
+BOOL CJobEditDlgTool::OnInitDialog()
+{
+	CDialog::OnInitDialog();
+
+	// TODO:  在此添加额外的初始化
+	((CEdit*)GetDlgItem(IDC_ZCW_TOOL_LABEL))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_TOOL_TYPE))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_TOOL_LENGTH))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_TOOL_SN))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_TOOL_WEIGHT))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_TOOL_OUTERDIAM))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_TOOL_SPEED))->SetLimitText(10);
+
+	return TRUE;  // return TRUE unless you set the focus to a control
+	// 异常: OCX 属性页应返回 FALSE
+}

@@ -19,6 +19,7 @@ public:
 public:
 	HWND fatherHwnd;
 	int receiveFlag;
+	bool bNormalClose;
 	void OnExpandtree(); //展开所有节点 
 	void ExpandTreeNode(HTREEITEM hTreeItem);
 	CDaoDatabase m_DataBase;
@@ -43,6 +44,7 @@ public:
 	afx_msg void OnToolOpen();
 	afx_msg void OnToolCopy();
 	afx_msg void OnToolDel();
+	afx_msg void OnRemoveTool();
 	void JobCreat();
 	void JobAdd(CString jobName);
 	void DisplayTreeLeft();
@@ -54,4 +56,6 @@ public:
 	afx_msg void OnNMDblclkZcwJobTree(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnNMDblclkZcwJobtreeLeft(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnNMRClickZcwJobTree(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnNMRClickZcwJobtreeLeft(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnClose();
 };

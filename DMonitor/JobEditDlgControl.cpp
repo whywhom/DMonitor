@@ -67,6 +67,12 @@ BOOL CJobEditDlgControl::OnInitDialog()
 	CDialog::OnInitDialog();
 
 	// TODO:  在此添加额外的初始化
+	((CEdit*)GetDlgItem(IDC_ZCW_CONTROL_EDIT1))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_CONTROL_EDIT2))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_CONTROL_EDIT3))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_CONTROL_EDIT4))->SetLimitText(10);
+	((CEdit*)GetDlgItem(IDC_ZCW_CONTROL_EDIT5))->SetLimitText(10);
+
 	CString m_combo1ary[]={_T("100"),_T("125"),_T("25"),_T("31.25")};
 	CString m_combo2ary[]={_T("600"),_T("450"),_T("300"),_T("100")};
 	CString m_combo3ary[]={_T("3000")};

@@ -21,4 +21,5 @@ protected:
 public:
 	CString m_oldName;
 	CString m_newName;
+	virtual BOOL OnInitDialog();
 };

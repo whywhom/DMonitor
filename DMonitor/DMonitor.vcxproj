@@ -134,6 +134,7 @@
     <ClInclude Include="json\include\value.h" />
     <ClInclude Include="json\include\writer.h" />
     <ClInclude Include="json\src\json_batchallocator.h" />
+    <ClInclude Include="LimitEdit.h" />
     <ClInclude Include="PetroData.h" />
     <ClInclude Include="PublicInterface.h" />
     <ClInclude Include="Resource.h" />
@@ -168,6 +169,7 @@
     <ClCompile Include="json\src\json_reader.cpp" />
     <ClCompile Include="json\src\json_value.cpp" />
     <ClCompile Include="json\src\json_writer.cpp" />
+    <ClCompile Include="LimitEdit.cpp" />
     <ClCompile Include="PetroData.cpp" />
     <ClCompile Include="SerialPort.cpp" />
     <ClCompile Include="SortStringArray.cpp" />

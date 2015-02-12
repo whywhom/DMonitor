@@ -5,7 +5,7 @@ Name 测井地面系统
 
 # General Symbol Definitions
 !define REGKEY "SOFTWARE\$(^Name)"
-!define VERSION 1.15.1.12
+!define VERSION 1.15.2.10
 !define COMPANY 力擎数控
 !define URL ""
 
@@ -45,7 +45,7 @@ InstallDir $PROGRAMFILES\力擎数控
 CRCCheck on
 XPStyle on
 ShowInstDetails show
-VIProductVersion 1.15.1.12
+VIProductVersion 1.15.2.10
 VIAddVersionKey /LANG=${LANG_SIMPCHINESE} ProductName 测井地面系统
 VIAddVersionKey /LANG=${LANG_SIMPCHINESE} ProductVersion "${VERSION}"
 VIAddVersionKey /LANG=${LANG_SIMPCHINESE} CompanyName "${COMPANY}"
@@ -135,6 +135,12 @@ Section /o -un.Main UNSEC0000
 #    RmDir /r /REBOOTOK $INSTDIR\Temp
 #    RmDir /r /REBOOTOK $INSTDIR\Tools
     RmDir /r /REBOOTOK $INSTDIR\Help
+    
+    MessageBox MB_YESNO|MB_ICONQUESTION \
+	"是否删除用户数据？$\n(若您要保留用户数据(例如设备和作业)，请点击下面的“否”按钮)" \
+	IDNO NoDelete
+# 全删光！！！
+
     SetShellVarContext current
     RmDir /r /REBOOTOK $APPDATA\DMonitor\Config
     RmDir /r /REBOOTOK $APPDATA\DMonitor\Data
@@ -142,6 +148,8 @@ Section /o -un.Main UNSEC0000
     RmDir /r /REBOOTOK $APPDATA\DMonitor\Log
     RmDir /r /REBOOTOK $APPDATA\DMonitor\Temp
     RmDir /r /REBOOTOK $APPDATA\DMonitor\Tools
+  NoDelete:
+    Delete /REBOOTOK $INSTDIR\DMonitor.exe
     RmDir /REBOOTOK $APPDATA\DMonitor
     SetShellVarContext all
     DeleteRegValue HKLM "${REGKEY}\Components" Main

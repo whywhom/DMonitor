@@ -11,6 +11,7 @@
 #include <iostream> 
 #include <fstream> 
 #include <cassert> 
+#include <math.h>
 #include "json\include\json.h"
 using namespace std; 
 #ifdef _DEBUG
@@ -215,6 +216,7 @@ BOOL CDMonitorDlg::OnInitDialog()
 	::SetMenu(this->GetSafeHwnd(),m_hMenu);//添加到对话框
 	bExiting = false;
 	bLoadAssignment = false;
+	theApp.LoadJobName = _T("");
 	OnInitWidget();
 	ParseWorkInfoData();
 	ParseWorkUnitData();
@@ -1069,12 +1071,12 @@ void CDMonitorDlg::DrawScale(CDC* pDC)
 					pDC->DrawText(plist->strSignal,rectTop,DT_CENTER);
 
 					pDC->SetTextAlign(TA_LEFT);
-					str.Format(_T("%f"),plist->leftLimit);
+					str.Format(_T("%.2f"),plist->leftLimit);
 					//pDC->TextOut(1,30*i+16,str);   //输出文本值
 					pDC->DrawText(str,rectBottom,DT_LEFT);
 
 					pDC->SetTextAlign(TA_RIGHT);
-					str.Format(_T("%f"),plist->rightLimit);
+					str.Format(_T("%.2f"),plist->rightLimit);
 					//pDC->TextOut(rect.Width()-100,30*i+16,str);   //输出文本值
 					pDC->DrawText(str,rectBottom,DT_RIGHT);
 					i++;
@@ -2475,7 +2477,8 @@ LRESULT CDMonitorDlg::OnJobloadReceive(WPARAM wParam, LPARAM lParam)
 	//pFileName = NULL;
 	if(wParam == 0)
 	{
-		MessageBox(_T("载入作业成功！"),_T("提示"), MB_OKCANCEL );	 
+		bLoadAssignment = true;
+		MessageBox(_T("载入作业成功！"),_T("提示"), MB_OK );	 
 	} 
 	PrepareCurveInfo();
 	return 0;
@@ -2483,6 +2486,7 @@ LRESULT CDMonitorDlg::OnJobloadReceive(WPARAM wParam, LPARAM lParam)
 
 int CDMonitorDlg::ParseJsonFromFile(CString filename)  
 {  
+	CWorkInfo* plist;
 	ClearWorkInfoList();
 	//CFile fAddressImport;
 	//CFileException eFileException;
@@ -2521,36 +2525,49 @@ int CDMonitorDlg::ParseJsonFromFile(CString filename)
 			// 遍历数组   
 			for(int i = 0; i < curve_size; ++i)  
 			{  
-				CWorkInfo* plist = new CWorkInfo();
 				Json::Value val_Label = root["arrayCurve"][i]["Label"];  
-				plist->strSignal = val_Label.asCString();
-				Json::Value val_Unit = root["arrayCurve"][i]["Unit"]; 
-				plist->strUnit = val_Unit.asCString();
-				Json::Value val_Filter = root["arrayCurve"][i]["Filter"]; 
-				plist->strFilter = val_Filter.asCString();
-				Json::Value val_Title = root["arrayCurve"][i]["Title"]; 
-				plist->strTitle = val_Title.asCString();
+				Json::Value val_Unit = root["arrayCurve"][i]["Unit"]; 				
+				Json::Value val_Filter = root["arrayCurve"][i]["Filter"]; 				
+				Json::Value val_Title = root["arrayCurve"][i]["Title"]; 				
 				Json::Value val_MIN = root["arrayCurve"][i]["MIN"]; 
-				double min = val_MIN.asInt();
-				plist->leftLimit = val_MIN.asInt();
+				double min = val_MIN.asDouble();				
 				Json::Value val_MAX = root["arrayCurve"][i]["MAX"]; 
-				double max = val_MAX.asInt();
-				plist->rightLimit = val_MAX.asInt();
+				double max = val_MAX.asDouble();				
 				Json::Value val_COLOR_R = root["arrayCurve"][i]["COLOR_R"]; 
 				BYTE cR = val_COLOR_R.asUInt();
 				Json::Value val_COLOR_G = root["arrayCurve"][i]["COLOR_G"]; 
 				BYTE cG = val_COLOR_G.asUInt();
 				Json::Value val_COLOR_B = root["arrayCurve"][i]["COLOR_B"]; 
-				BYTE cB = val_COLOR_B.asUInt();
-				plist->curveColor = RGB(cR,cG,cB);
-				Json::Value val_TRACK = root["arrayCurve"][i]["TRACK"]; 
-				plist->trackNum = val_TRACK.asInt();
-				Json::Value val_LINETYPE = root["arrayCurve"][i]["LINETYPE"]; 
-				plist->lineType = val_LINETYPE.asInt();
-				Json::Value val_LINEWIDTH = root["arrayCurve"][i]["LINEWIDTH"]; 
-				plist->lineWidth = val_LINEWIDTH.asInt();
-				//plist->curveColor = curveSelectColor;
-				theApp.workInfoList.AddTail(plist);
+				BYTE cB = val_COLOR_B.asUInt();				
+				Json::Value val_TRACK = root["arrayCurve"][i]["TRACK"]; 				
+				Json::Value val_LINETYPE = root["arrayCurve"][i]["LINETYPE"]; 				
+				Json::Value val_LINEWIDTH = root["arrayCurve"][i]["LINEWIDTH"]; 				
+				Json::Value val_Tool = root["arrayCurve"][i]["Tool"]; 
+
+				CString strTempTitle;
+				strTempTitle = val_Title.asCString();
+				plist = FindSameTitleInWorkInfo(strTempTitle);
+				if(plist != NULL)
+				{
+					plist->leftLimit = min(plist->leftLimit,min);
+					plist->rightLimit = max(plist->rightLimit,max);
+				}
+				else
+				{
+					plist = new CWorkInfo();
+					plist->strSignal = val_Label.asCString();
+					plist->strUnit = val_Unit.asCString();
+					plist->strFilter = val_Filter.asCString();
+					plist->strTitle = val_Title.asCString();
+					plist->leftLimit = val_MIN.asDouble();
+					plist->rightLimit = val_MAX.asDouble();
+					plist->curveColor = RGB(cR,cG,cB);
+					plist->trackNum = val_TRACK.asInt();
+					plist->lineType = val_LINETYPE.asInt();
+					plist->lineWidth = val_LINEWIDTH.asInt();
+					plist->strTool = val_Tool.asCString();
+					theApp.workInfoList.AddTail(plist);
+				}
 			}
 		}
 	}  
@@ -2562,6 +2579,19 @@ int CDMonitorDlg::ParseJsonFromFile(CString filename)
 	return 0;  
 }  
 
+CWorkInfo* CDMonitorDlg::FindSameTitleInWorkInfo(CString strTitle)
+{
+	POSITION pos = theApp.workInfoList.GetHeadPosition();
+	while(pos)
+	{
+		CWorkInfo* plist = theApp.workInfoList.GetNext(pos);
+		if(!plist->strTitle.Compare(strTitle))
+		{
+			return plist;
+		}
+	}
+	return NULL;
+}
 LRESULT CDMonitorDlg::OnCommReceive(WPARAM wParam, LPARAM lParam)
 {
 #ifdef _DEBUG
@@ -2840,7 +2870,6 @@ void CDMonitorDlg::PrepareCurveInfo()
 			str_unitlist.push_back(strStd);
 		}
 	}
-	bLoadAssignment = true;
 }
 void CDMonitorDlg::ClearWorkInfoList()
 {

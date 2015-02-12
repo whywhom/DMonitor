@@ -36,3 +36,15 @@ END_MESSAGE_MAP()
 
 
 // CJobCopyDlg 消息处理程序
+
+
+BOOL CJobCopyDlg::OnInitDialog()
+{
+	CDialog::OnInitDialog();
+
+	// TODO:  在此添加额外的初始化
+	 ((CEdit*)GetDlgItem(IDC_ZCW_COPY_NEWNAME))->SetLimitText(10);
+
+	return TRUE;  // return TRUE unless you set the focus to a control
+	// 异常: OCX 属性页应返回 FALSE
+}
