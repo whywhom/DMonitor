@@ -1160,6 +1160,7 @@ void CDMonitorDlg::DrawRealtimeCurve(CDC* pDC , double upDepth, double DownDepth
 
 	if(processType == REALTIME_PROCESSING)
 	{
+		ClearDataTempa();
 		if(m_bDirectDown)
 		{
 			pos = petroList.GetTailPosition();
@@ -1480,6 +1481,7 @@ void CDMonitorDlg::DrawParamData(CDC* pDC ,CPetroData* pPData)
 		{
 			oldArray.AddTail(mOldArray);
 		}
+
 		bFound = false;
 	}
 }
@@ -2129,6 +2131,7 @@ void CDMonitorDlg::OnTimer(UINT_PTR nIDEvent)
 					{
 						UpdatePanelListView(petroList.GetHead());
 					}
+					//ClearDataTempa();
 					InvalidateRect(rectView,false);
 				}
 				SetTimer(TIMER_CMD_DRAW,TIME_REFRESH_REALTIME,NULL);
@@ -2175,6 +2178,7 @@ void CDMonitorDlg::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 				minDepth = (int)TempPos+minDepthLimit;
 				maxDepth = (int)minDepth+pageMeter;
 			}
+			ClearDataTempa();
 			InvalidateRect(rectView,false);
 			break;
 		case SB_LINEUP://点击上边的箭头
@@ -2192,6 +2196,7 @@ void CDMonitorDlg::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 				maxDepth = (int)minDepth+pageMeter;
 				pScrollBar->SetScrollPos(TempPos);
 			}
+			ClearDataTempa();
 			InvalidateRect(rectView,false);
 			break;
 		case SB_LINEDOWN://点击下边的箭头
@@ -2209,6 +2214,7 @@ void CDMonitorDlg::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 				maxDepth = (int)minDepth+pageMeter;
 				pScrollBar->SetScrollPos(TempPos);
 			}
+			ClearDataTempa();
 			InvalidateRect(rectView,false);
 			break;
 		case SB_PAGEUP://向上翻页
@@ -2226,6 +2232,7 @@ void CDMonitorDlg::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 				maxDepth = (int)minDepth+pageMeter;
 				pScrollBar->SetScrollPos(TempPos);
 			}
+			ClearDataTempa();
 			InvalidateRect(rectView,false);
 			break;
 		case SB_PAGEDOWN://向下翻页
@@ -2243,6 +2250,7 @@ void CDMonitorDlg::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 				maxDepth = (int)minDepth+pageMeter;
 				pScrollBar->SetScrollPos(TempPos);
 			}
+			ClearDataTempa();
 			InvalidateRect(rectView,false);
 			break;
 		} 
