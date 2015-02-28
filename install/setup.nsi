@@ -5,7 +5,7 @@ Name 测井地面系统
 
 # General Symbol Definitions
 !define REGKEY "SOFTWARE\$(^Name)"
-!define VERSION 1.15.2.10
+!define VERSION 1.15.2.28
 !define COMPANY 力擎数控
 !define URL ""
 
@@ -45,7 +45,7 @@ InstallDir $PROGRAMFILES\力擎数控
 CRCCheck on
 XPStyle on
 ShowInstDetails show
-VIProductVersion 1.15.2.10
+VIProductVersion 1.15.2.28
 VIAddVersionKey /LANG=${LANG_SIMPCHINESE} ProductName 测井地面系统
 VIAddVersionKey /LANG=${LANG_SIMPCHINESE} ProductVersion "${VERSION}"
 VIAddVersionKey /LANG=${LANG_SIMPCHINESE} CompanyName "${COMPANY}"
