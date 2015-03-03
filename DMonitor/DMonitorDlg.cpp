@@ -2039,8 +2039,8 @@ void CDMonitorDlg::StartTimer()
 	pOldPData = NULL;
 	pos = NULL;//当前记录位置
 	bTimer = true;
-	InitOldArrayData();
-	InitArrayData();
+	//InitOldArrayData();
+	//InitArrayData();
 	ClearDataTempa();
 	SetScaleScroll();
 	if(processType == REALTIME_PROCESSING)
@@ -2392,7 +2392,7 @@ void CDMonitorDlg::OnMenuConn()
 	bConnect = true;
 	theApp.commLayer.SetConnectType(TYPE_NONE);
 	theApp.commLayer.fatherHwnd = (AfxGetMainWnd()->GetSafeHwnd());//获取HWND，赋值给通信层进行消息传递
-	
+	ClearDataTempa();
 	CString strTime;
 	//获取系统时间
 	CTime tm;
