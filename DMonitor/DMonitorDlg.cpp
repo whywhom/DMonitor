@@ -941,6 +941,10 @@ void CDMonitorDlg::DrawData(CDC* pDC)
 {
 	if(processType == REALTIME_PROCESSING)
 	{
+		if(petroList.IsEmpty())
+		{
+			return;
+		}
 		DrawRealtimeBasic(pDC);//获取内存映射绘制区域大小
 		DrawRealtimeGrid(pDC);
 		DrawRealtimePlot(pDC);
@@ -2039,8 +2043,6 @@ void CDMonitorDlg::StartTimer()
 	pOldPData = NULL;
 	pos = NULL;//当前记录位置
 	bTimer = true;
-	//InitOldArrayData();
-	//InitArrayData();
 	ClearDataTempa();
 	SetScaleScroll();
 	if(processType == REALTIME_PROCESSING)
@@ -2132,6 +2134,7 @@ void CDMonitorDlg::OnTimer(UINT_PTR nIDEvent)
 						UpdatePanelListView(petroList.GetHead());
 					}
 					//ClearDataTempa();
+					//InvalidateRect(rectScale,false);
 					InvalidateRect(rectView,false);
 				}
 				SetTimer(TIMER_CMD_DRAW,TIME_REFRESH_REALTIME,NULL);
@@ -2410,6 +2413,7 @@ void CDMonitorDlg::OnMenuConn()
 	theApp.m_CommResault=theApp.commLayer.CreatConnect();
 	if(theApp.m_CommResault==COMM_SUCCESS)
 	{
+		ClearPetroData();
 		processType = REALTIME_PROCESSING;
 		StartTimer();
 	}
