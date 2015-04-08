@@ -240,4 +240,6 @@ public:
 	CScrollBar mScrollScaleV;
 	afx_msg void OnMenuAbout();
 	afx_msg void OnInstruction();
+	afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
+	virtual BOOL OnCommand(WPARAM wParam, LPARAM lParam);
 };

@@ -179,6 +179,7 @@ BEGIN_MESSAGE_MAP(CDMonitorDlg, CDialogEx)
 	ON_COMMAND(ID_TEST_MODE1, &CDMonitorDlg::OnTestMode1)
 	ON_COMMAND(ID_MENU_ABOUT, &CDMonitorDlg::OnMenuAbout)
 	ON_COMMAND(ID_INSTRUCTION, &CDMonitorDlg::OnInstruction)
+	ON_WM_INITMENUPOPUP()
 END_MESSAGE_MAP()
 
 
@@ -225,6 +226,7 @@ BOOL CDMonitorDlg::OnInitDialog()
 	ShowWindow(SW_SHOWMAXIMIZED);
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
+
 void CDMonitorDlg::OnInitWidget()
 {
 	value01.LoadString(IDS_DEEPTH);
@@ -2089,6 +2091,7 @@ void CDMonitorDlg::StartTimer()
 			mScrollV.SetScrollRange(0,(maxDepthLimit - minDepthLimit - pageMeter));
 			mScrollV.SetScrollPos(0);
 		}
+		InvalidateRect(rectScale,false);
 		SetTimer(TIMER_CMD_DRAW,TIME_REFRESH_FILE,NULL);
 	}
 }
@@ -2375,27 +2378,13 @@ void CDMonitorDlg::OnMenuConn()
 		MessageBox(_T("请加载作业"),_T("提示"),MB_OK);
 		return;
 	}
-	CMenu* pSubMenu = NULL;
-	CMenu* pMainMenu = AfxGetMainWnd()->GetMenu();
-	{
-		pSubMenu = pMainMenu->GetSubMenu(1);
-		if (pSubMenu && pSubMenu->GetMenuItemID(0) == ID_MENU_CONN)
-		{
-			pSubMenu->CheckMenuItem(ID_MENU_CONN,MF_CHECKED); 
-		}
-		if (pSubMenu && pSubMenu->GetMenuItemID(1) == ID_MENU_DISCONN)
-		{
-			pSubMenu->CheckMenuItem(ID_MENU_DISCONN,MF_UNCHECKED); 
-		}
-	}
+	
 	if(bConnect == true)
 	{
 		return;
 	}
-	bConnect = true;
-	theApp.commLayer.SetConnectType(TYPE_NONE);
-	theApp.commLayer.fatherHwnd = (AfxGetMainWnd()->GetSafeHwnd());//获取HWND，赋值给通信层进行消息传递
-	ClearDataTempa();
+	
+	
 	CString strTime;
 	//获取系统时间
 	CTime tm;
@@ -2405,8 +2394,37 @@ void CDMonitorDlg::OnMenuConn()
 	CFileDialog dlg (FALSE, _T("dmor"), fileName, OFN_HIDEREADONLY | OFN_EXPLORER | OFN_OVERWRITEPROMPT, NULL);
 	if (dlg.DoModal () == IDOK)
 	{
+		bConnect = true;
+		theApp.commLayer.SetConnectType(TYPE_NONE);
+		theApp.commLayer.fatherHwnd = (AfxGetMainWnd()->GetSafeHwnd());//获取HWND，赋值给通信层进行消息传递
+		ClearDataTempa();
 		sGetFileName = dlg.GetPathName ();
 		openDataFile(sGetFileName);
+		CMenu* pSubMenu = NULL;
+		CMenu* pMainMenu = AfxGetMainWnd()->GetMenu();
+		{
+			pSubMenu = pMainMenu->GetSubMenu(1);
+			if (pSubMenu && pSubMenu->GetMenuItemID(0) == ID_MENU_CONN)
+			{
+				pSubMenu->CheckMenuItem(ID_MENU_CONN,MF_CHECKED); 
+			}
+			if (pSubMenu && pSubMenu->GetMenuItemID(1) == ID_MENU_DISCONN)
+			{
+				pSubMenu->CheckMenuItem(ID_MENU_DISCONN,MF_UNCHECKED); 
+			}
+			pSubMenu = pMainMenu->GetSubMenu(2);
+			pSubMenu->EnableMenuItem(ID_MENU_JOBLOAD ,MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
+			pSubMenu->EnableMenuItem(ID_MENU_JOB ,MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
+			pSubMenu->EnableMenuItem(ID_MENU_TOOL ,MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
+			
+			pSubMenu = pMainMenu->GetSubMenu(3);
+			pSubMenu->EnableMenuItem(ID_MENU_MEASUREUP ,MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
+			pSubMenu->EnableMenuItem(ID_MENU_MEASUREDOWN ,MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
+		}
+	}
+	else
+	{
+		return;
 	}
 	totalReceiveByte = 0;
 	fileNum = 0;
@@ -2445,6 +2463,14 @@ void CDMonitorDlg::OnMenuDisconn()
 		{
 			pSubMenu->CheckMenuItem(ID_MENU_DISCONN,MF_CHECKED); 
 		}
+		pSubMenu = pMainMenu->GetSubMenu(2);
+		pSubMenu->EnableMenuItem(ID_MENU_JOBLOAD ,MF_BYCOMMAND | MF_ENABLED);
+		pSubMenu->EnableMenuItem(ID_MENU_JOB ,MF_BYCOMMAND | MF_ENABLED);
+		pSubMenu->EnableMenuItem(ID_MENU_TOOL ,MF_BYCOMMAND | MF_ENABLED);
+			
+		pSubMenu = pMainMenu->GetSubMenu(3);
+		pSubMenu->EnableMenuItem(ID_MENU_MEASUREUP ,MF_BYCOMMAND | MF_ENABLED);
+		pSubMenu->EnableMenuItem(ID_MENU_MEASUREDOWN ,MF_BYCOMMAND | MF_ENABLED);
 	}
 	if(bConnect == false)
 	{
@@ -3615,4 +3641,94 @@ void CDMonitorDlg::OnInstruction()
 			MessageBox(str,_T("提示"),MB_OK); 
 		}
 	}
+}
+
+
+void CDMonitorDlg::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
+{
+    ASSERT(pPopupMenu != NULL);
+    // Check the enabled state of various menu items.
+
+    CCmdUI state;
+    state.m_pMenu = pPopupMenu;
+    ASSERT(state.m_pOther == NULL);
+    ASSERT(state.m_pParentMenu == NULL);
+
+    // Determine if menu is popup in top-level menu and set m_pOther to
+    // it if so (m_pParentMenu == NULL indicates that it is secondary popup).
+    HMENU hParentMenu;
+    if (AfxGetThreadState()->m_hTrackingMenu == pPopupMenu->m_hMenu)
+        state.m_pParentMenu = pPopupMenu;    // Parent == child for tracking popup.
+    else if ((hParentMenu = ::GetMenu(m_hWnd)) != NULL)
+    {
+        CWnd* pParent = this;
+           // Child windows don't have menus--need to go to the top!
+        if (pParent != NULL &&
+           (hParentMenu = ::GetMenu(pParent->m_hWnd)) != NULL)
+        {
+           int nIndexMax = ::GetMenuItemCount(hParentMenu);
+           for (int nIndex = 0; nIndex < nIndexMax; nIndex++)
+           {
+            if (::GetSubMenu(hParentMenu, nIndex) == pPopupMenu->m_hMenu)
+            {
+                // When popup is found, m_pParentMenu is containing menu.
+                state.m_pParentMenu = CMenu::FromHandle(hParentMenu);
+                break;
+            }
+           }
+        }
+    }
+
+    state.m_nIndexMax = pPopupMenu->GetMenuItemCount();
+    for (state.m_nIndex = 0; state.m_nIndex < state.m_nIndexMax;
+      state.m_nIndex++)
+    {
+        state.m_nID = pPopupMenu->GetMenuItemID(state.m_nIndex);
+        if (state.m_nID == 0)
+           continue; // Menu separator or invalid cmd - ignore it.
+
+        ASSERT(state.m_pOther == NULL);
+        ASSERT(state.m_pMenu != NULL);
+        if (state.m_nID == (UINT)-1)
+        {
+           // Possibly a popup menu, route to first item of that popup.
+           state.m_pSubMenu = pPopupMenu->GetSubMenu(state.m_nIndex);
+           if (state.m_pSubMenu == NULL ||
+            (state.m_nID = state.m_pSubMenu->GetMenuItemID(0)) == 0 ||
+            state.m_nID == (UINT)-1)
+           {
+            continue;       // First item of popup can't be routed to.
+           }
+           state.DoUpdate(this, TRUE);   // Popups are never auto disabled.
+        }
+        else
+        {
+           // Normal menu item.
+           // Auto enable/disable if frame window has m_bAutoMenuEnable
+           // set and command is _not_ a system command.
+           state.m_pSubMenu = NULL;
+           state.DoUpdate(this, FALSE);
+        }
+
+        // Adjust for menu deletions and additions.
+        UINT nCount = pPopupMenu->GetMenuItemCount();
+        if (nCount < state.m_nIndexMax)
+        {
+           state.m_nIndex -= (state.m_nIndexMax - nCount);
+           while (state.m_nIndex < nCount &&
+            pPopupMenu->GetMenuItemID(state.m_nIndex) == state.m_nID)
+           {
+            state.m_nIndex++;
+           }
+        }
+        state.m_nIndexMax = nCount;
+    }
+}
+
+
+BOOL CDMonitorDlg::OnCommand(WPARAM wParam, LPARAM lParam)
+{
+	// TODO: 在此添加专用代码和/或调用基类
+
+	return CDialogEx::OnCommand(wParam, lParam);
 }

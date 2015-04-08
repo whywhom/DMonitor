@@ -222,6 +222,11 @@ void CJobDlg::ExpandTreeNode(HTREEITEM hTreeItem)
 void CJobDlg::OnJobDel()
 {
 	// TODO: 在此添加命令处理程序代码
+	if(::GetFocus() != m_JobTreeLeft.GetSafeHwnd())
+	{
+		//判断当前获取焦点的是否作业控件
+		return;
+	}
 	HTREEITEM sel_job=m_JobTreeLeft.GetSelectedItem(); 
 	CString JobName=m_JobTreeLeft.GetItemText(sel_job);//获取文件路径名称
 	HTREEITEM hPar=m_JobTreeLeft.GetParentItem(sel_job);//父节点
